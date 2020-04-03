@@ -1,7 +1,7 @@
 import React from 'react'
 import PropsTypes from 'prop-types'
 
-import classes from './BurgerIngredients.module.css'
+import classes from './BurgerIngridients.module.css'
 
 const ingredient = (props) => {
     let ingredient = null
@@ -13,8 +13,8 @@ const ingredient = (props) => {
         case 'bread-top':
             ingredient = (
                 <div className={classes.BreadTop}>
-                    <div className={classes.Seed1}/>
-                    <div className={classes.Seed2}/>
+                    <div className={classes.Seeds1}/>
+                    <div className={classes.Seeds2}/>
                 </div>
             )
             break
