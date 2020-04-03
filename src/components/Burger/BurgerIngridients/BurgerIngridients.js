@@ -1,4 +1,5 @@
 import React from 'react'
+import PropsTypes from 'prop-types'
 
 import classes from './BurgerIngredients.module.css'
 
@@ -33,6 +34,10 @@ const ingredient = (props) => {
             console.log('Invalid ingredient: ' + props.tyoe)
     }
     return ingredient;
+}
+
+ingredient.prototype ={
+    type: PropsTypes.string.isRequired
 }
 
 export default ingredient
