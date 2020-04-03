@@ -4,6 +4,13 @@ import BuilderControls from '../../components/Burger/BuildControls/BuilderContro
 
 import Aux from '../../hocs/Aux'
 
+const INGRIDIENT_PRICES = {
+    salad: 0.3,
+    meat: 1.2,
+    cheese: 0.2,
+    bacon: 0.5
+}
+
 class BurgerBuilder extends Component {
 
     state = {
@@ -12,14 +19,24 @@ class BurgerBuilder extends Component {
             meat: 1,
             cheese: 1,
             bacon: 0
+        },
+        totalPrice: 1
+    }
+
+    addIngridientHandler = (type) => {
+        const newIngrdidients = {
+            ...this.state.ingridients
         }
+        newIngrdidients[type] = this.state.ingridients[type] + 1
+        const newPrice = this.state.totalPrice + INGRIDIENT_PRICES[type]
+        this.setState({ingridients: newIngrdidients, totalPrice: newPrice})
     }
 
     render() {
         return (
             <Aux>
                 <Burger ingridients={this.state.ingridients} />
-                <BuilderControls />
+                <BuilderControls ingridientAdded={this.addIngridientHandler}/>
             </Aux>
         )
     }
