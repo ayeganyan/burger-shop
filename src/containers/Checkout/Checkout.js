@@ -14,10 +14,22 @@ export default class Checkout extends Component {
         }
     }
 
+    checkoutCanceledHandler = () => {
+        this.props.history.goback()
+    }
+
+    checkoutContinuedHandler = () => {
+        this.props.history.replace('/checkout/contact-data')
+    }
+
     render() {
+        console.log(this.props.history)
         return (
             <div>
-                <CheckoutSummary ingredients={this.state.ingredients} />
+                <CheckoutSummary 
+                    checkoutCanceled={this.checkoutCanceledHandler}
+                    checkoutContinued={this.checkoutContinuedHandler}
+                    ingredients={this.state.ingredients} />
             </div>
         )
     }
