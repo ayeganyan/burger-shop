@@ -14,8 +14,17 @@ export default class Checkout extends Component {
         }
     }
 
+    componentDidMount() {
+        const ingredients = {}
+        const query = new URLSearchParams(this.props.location.search)
+        for(let [name, count] of query) {
+            ingredients[name] = +count
+        }
+        this.setState({ingredients: ingredients})
+    }
+
     checkoutCanceledHandler = () => {
-        this.props.history.goback()
+        this.props.history.goBack()
     }
 
     checkoutContinuedHandler = () => {
