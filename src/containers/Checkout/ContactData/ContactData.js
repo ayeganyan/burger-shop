@@ -94,11 +94,13 @@ export default
                         {value: 'cheapest', displayValue: 'Cheapest'}
                     ]
                 },
-                value: '',
+                validation: {},
+                value: 'fastest',
                 valid: true
             },
         },
-        loading: false
+        loading: false,
+        formIsValid: false
     }
 
     checkValidity(value, rules) {
@@ -126,7 +128,13 @@ export default
         updatedOrderFormElement.valid = this.checkValidity(updatedOrderFormElement.value, updatedOrderFormElement.validation)
         updatedOrderFormElement.touched = true
         updatedOrderForm[inputIdentifier] = updatedOrderFormElement
-        this.setState({orderForm: updatedOrderForm})
+
+        let formIsValid = false
+        for(let inputIdentifier in updatedOrderForm) {
+            formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid
+        }
+
+        this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid})
     }
 
     orderHandler = (event) => {
@@ -161,7 +169,7 @@ export default
         }
         let form = (
             <form onSubmit={this.orderHandler}>
-                {formElementsArray.map(formElement=>{
+                {formElementsArray.map(formElement => {
                     return <Input
                             key={formElement.id}
                             elementType={formElement.config.elementType}
@@ -172,7 +180,7 @@ export default
                             touched={formElement.config.touched}
                             changed={(event) => this.inputChangeHandler(event, formElement.id)}/>
                 })}
-                <Button btnType='Success'>ORDER</Button>
+                <Button btnType='Success' disabled={!this.state.formIsValid}>ORDER</Button>
             </form>
         )
         if (this.state.loading) {
