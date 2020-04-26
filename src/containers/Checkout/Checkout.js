@@ -45,7 +45,7 @@ export default class Checkout extends Component {
                     path={this.props.match.path + '/contact-data'} 
                     render={(props) => 
                         <ContactData 
-                            ingredients={this.ingredients} 
+                            ingredients={this.state.ingredients} 
                             totalPrice={this.state.totalPrice} 
                             {...props}/>}/>
             </div>

@@ -20,8 +20,9 @@ export default
 
     orderHandler = (event) => {
         event.preventDefault()
+        console.log(this.props.ingredients)
         const order = {
-            ingridients: this.props.ingredients,
+            ingredients: this.props.ingredients,
             price: this.props.totalPrice,
             customer: 'Armen',
             deliveryMethod: 'Fast',
