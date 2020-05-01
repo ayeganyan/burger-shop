@@ -1,30 +1,11 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
 import ContactData from './ContactData/ContactData'
 
-export default class Checkout extends Component {
-
-    state = {
-        ingredients: null,
-        totalPrice: 0
-    }
-
-    componentWillMount() {
-        const ingredients = {}
-        const query = new URLSearchParams(this.props.location.search)
-        let price = 0
-        for(let [name, value] of query) {
-            if(name === 'price') {
-                price = value;
-            } else {
-                ingredients[name] = +value
-            }
-        }
-        this.setState({ingredients: ingredients, totalPrice: price})
-    }
-
+class Checkout extends Component {
     checkoutCanceledHandler = () => {
         this.props.history.goBack()
     }
@@ -37,18 +18,22 @@ export default class Checkout extends Component {
         console.log(this.props.history)
         return (
             <div>
-                <CheckoutSummary 
+                <CheckoutSummary
                     checkoutCanceled={this.checkoutCanceledHandler}
                     checkoutContinued={this.checkoutContinuedHandler}
-                    ingredients={this.state.ingredients} />
-                <Route 
-                    path={this.props.match.path + '/contact-data'} 
-                    render={(props) => 
-                        <ContactData 
-                            ingredients={this.state.ingredients} 
-                            totalPrice={this.state.totalPrice} 
-                            {...props}/>}/>
+                    ingredients={this.props.ings} />
+                <Route
+                    path={this.props.match.path + '/contact-data'}
+                    component={ContactData} />
             </div>
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        ings: state.ingredients
+    }
+}
+
+export default connect(mapStateToProps)(Checkout)

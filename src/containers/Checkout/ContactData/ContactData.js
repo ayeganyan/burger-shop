@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import Button from '../../../components/UI/Button/Button'
 import axios from '../../../axios-orders'
 import Spinner from '../../../components/UI/Spinner/Spinner'
@@ -6,8 +7,7 @@ import Input from '../../../components/UI/Input/Input'
 
 import classes from './ContactData.module.css'
 
-export default
-    class ContactData extends Component {
+class ContactData extends Component {
 
     state = {
         orderForm: {
@@ -129,7 +129,7 @@ export default
         updatedOrderFormElement.touched = true
         updatedOrderForm[inputIdentifier] = updatedOrderFormElement
 
-        let formIsValid = false
+        let formIsValid = true
         for(let inputIdentifier in updatedOrderForm) {
             formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid
         }
@@ -144,8 +144,8 @@ export default
             formData[formElementId] = this.state.orderForm[formElementId]
         }   
         const order = {
-            ingredients: this.props.ingredients,
-            price: this.props.totalPrice,
+            ingredients: this.props.ings,
+            price: this.props.prc,
             order: formData
         }
         axios.post('orders.json', order)
@@ -194,3 +194,12 @@ export default
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        ings: state.ingredients,
+        prc: state.totalPrice
+    }
+}
+
+export default connect(mapStateToProps)(ContactData)
